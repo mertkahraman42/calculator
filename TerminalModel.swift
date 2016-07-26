@@ -68,8 +68,6 @@ class Terminal {
         
         // If . has been pressed and now we are on the right side of the dot
         else {
-        
-            
         memory2.append(input)
         var l = memory2.count-1 // l is our counter, starts from right side of the memory array
         var rightHandSide = "\(memory2[l])" // We store the RHS as a variable and update it on each loop. Our RHS value is the rightmost Double value inside the array
@@ -93,6 +91,19 @@ class Terminal {
         outputDisplay = preDotSideDisplay
         isLeft = false
         } // If . has been pressed, nothing happens in this function.
+    }
+    
+    // This function regulates the output on the secondLabel label place
+    func equalsDisplay(oper: Operation, firstValue: Double, secondValue: Double) -> String {
+        var symbol: String = ""
+        switch oper {   // We run a switch statement towards which operation was used, and use the appropriate symbol on the Terminal area
+        case .sum: symbol = "+"
+        case .subtract: symbol = "-"
+        case .multiply: symbol = "x"
+        case .divide: symbol = "/"
+        default: return "" // If its nil, the func returns empty string
+        }
+    return "\(firstValue) \(symbol) \(secondValue)" // We return the arithmetic operation statement in String format
     }
     
 }

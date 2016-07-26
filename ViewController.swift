@@ -13,6 +13,8 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var calculatorLabel: UILabel!
     
+    @IBOutlet weak var secondLabel: UILabel!
+    
     // Here we initialize our two main entities: 
     // (1) calculator which is a type of Calculator class, computes and handles all the calculating related activities. 
     // (2) display which is a type of Display, regulates and updates the display on the label area on top of our app
@@ -26,7 +28,7 @@ class ViewController: UIViewController {
         
         // Here we set our label area to be empty
         calculatorLabel.text = display.outputDisplay
-        
+        secondLabel.text = ""
         
     }
 
@@ -41,10 +43,12 @@ class ViewController: UIViewController {
         calculator.allClear()
         display.wipeTerminal()
         calculatorLabel.text = ""
+        secondLabel.text = ""
     }
     
     // When equals is pressed
     @IBAction func equals() {
+        // N: Update these optionality issues:
         if calculator.operation != .none {
         // Here we simply, check if = is pressed without selecting any operation before and inputting any additional number. If so then nothing happens, otherwise we continue with calculation.
         if display.output != nil { // This statement controls the optionality of current terminal output
@@ -53,9 +57,14 @@ class ViewController: UIViewController {
         calculator.calculate() // This statement is for the main calculation
         calculatorLabel.text = String(calculator.calculate()) // Here we update the label on our Terminal area
         display.wipeTerminal() // We wipe the Terminal using wipeTerminal() function and clear the display area
+        secondLabel.text = display.equalsDisplay(calculator.operation, firstValue: calculator.firstValue, secondValue: calculator.secondValue) // Here we also update the second label area to display the operation as a statement
         
         } else {
-            // Here we end our .none check of current operation and execute nothing.
+            // Here we simply, check if = is pressed without selecting any operation before and inputting any additional number. If so then Terminal area simply prints the number
+            let terminal = "\(display.output!)" // Here we update the label on our Terminal area
+            calculator.allClear()
+            display.wipeTerminal()
+            calculatorLabel.text = terminal
         }
     }
     
@@ -66,8 +75,8 @@ class ViewController: UIViewController {
         // N: Update the following to an optional binding
         if display.output != nil { // We check if the terminal are is not nil before continuing
             calculator.storeFirstValue(display.output!)
+            secondLabel.text = display.outputDisplay
         }
-        
         display.wipeTerminal() // Lastly, we wipe the Terminal using wipeTerminal() function and clear the display area
 
         calculatorLabel.text = display.outputDisplay
@@ -78,6 +87,7 @@ class ViewController: UIViewController {
         calculator.operationSelect(.subtract)
         if display.output != nil {
             calculator.storeFirstValue(display.output!)
+            secondLabel.text = display.outputDisplay
         }
         display.wipeTerminal()
         
@@ -88,6 +98,7 @@ class ViewController: UIViewController {
         calculator.operationSelect(.multiply)
         if display.output != nil {
             calculator.storeFirstValue(display.output!)
+            secondLabel.text = display.outputDisplay
         }
         display.wipeTerminal()
         
@@ -98,6 +109,7 @@ class ViewController: UIViewController {
         calculator.operationSelect(.divide)
         if display.output != nil {
             calculator.storeFirstValue(display.output!)
+            secondLabel.text = display.outputDisplay
         }
         display.wipeTerminal()
         
